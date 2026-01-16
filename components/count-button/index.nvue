@@ -1,0 +1,74 @@
+<template>
+	<view class="yujl-count-button" @click.self="onClick" :class="{'allow-click': isAllow}" >
+		{{text}}
+	</view>
+</template>
+<script>
+	export default {
+		props: {
+			startText: {
+				type: String,
+				default: '发送',
+			},
+			endText: {
+				type: String,
+				default: '重新发送',
+			},
+			second: {
+				type: Number,
+				default: 30,
+			},
+		},
+		data() {
+			return {
+				time: this.second + 1,
+				curPat: '',
+			}
+		},
+		computed: {
+			text() {
+				if(this.time > this.second) {
+					return this.startText;
+				} else if(this.time <= 0) {
+					return this.endText;
+				}
+				return `${this.time}秒`;
+			},
+			isAllow() {
+				if(this.time >= this.second || this.time <= 0) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+		},
+		mounted() {
+			this.curPat = this.$router.currentRoute.value.path;
+		},
+		methods: {
+			async onClick() {
+				if(!this.isAllow) return;
+				this.time = this.second;
+				clearInterval(this.timer);
+				this.increase();
+			},
+			reset() {
+				clearInterval(this.timer);
+				this.time = this.second + 1;
+			},
+			increase() {
+				this.time--;
+				if(this.time > 0) {
+					this.timer = setTimeout(() => {
+						if(this.$router.currentRoute.value.path === this.curPat) {
+							this.increase();
+						}
+					}, 1000)
+				}
+			},
+		},
+	}
+</script>
+<style>
+
+</style>

@@ -1,0 +1,131 @@
+<template>
+	<view class="yujl-container">
+		<view>
+			<radio-group @change="radioChange" class="disflex">
+				<label class="disflex">
+					<radio value="female" :checked="gender === 'female'" />
+					<text class="yujl-text">她说：</text>
+				</label>
+				<label class="disflex">
+					<radio value="male" :checked="gender === 'male'" />
+					<text class="yujl-text">他说：</text>
+				</label>
+			</radio-group>
+		</view>
+		<view class="yujl-textarea-wrap">
+			<textarea class="yujl-textarea" v-model="talk" />
+		</view>
+		<view class="yujl-btn-wrap">
+			<button type="primary" :disabled="!canReply" @click="generate">生成回复</button>
+		</view>
+		<view>
+			<view class="yujl-text-wrap text-border" scroll-y="true" v-for="(item, index) in replies" :key="index">
+				<text class="yujl-text">{{item.value}}</text>
+				<view class="yujl-btn-wrap">
+					<button class="mini-btn" type="primary" size="mini" @click="copy(item.value)">复制</button>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+import {mapState} from 'vuex';
+export default {
+	data() {
+		return {
+			gender: 'female', //性别(默认女性)
+			talk: '', //输入内容
+			replies: [], //回复内容
+		};
+	},
+	computed: {
+		/**
+		 * 是否可以回复
+		 * 1.输入框有值
+		 */
+		canReply() {
+			return !!this.talk;
+		},
+		...mapState(['hasLogin'])
+	},
+	methods: {
+		radioChange(evt) {
+			this.gender = evt.detail.value;
+		},
+		generate() {
+			/**
+			 * 1.用户未登录，引导去注册登录；
+			 * 2.非会员用户已登录，限制次数？，只返回一个结果？普通模式？
+			 * 3.会员用户已登录，次数不限制，返回多个结果。
+			 */
+			if(!this.hasLogin) {
+				return uni.navigateTo({
+					url: '/pages/login/index',
+				});
+			}
+			uni.showToast({
+				title: "loading",
+				icon: "loading",
+			});
+			let arr = [
+				{value: 'DCloud公司拥有900万开发者、数百万应用、12亿手机端月活用户、数千款uni-app插件、70+微信/qq群，开发者可以放心选择。'},
+				{value: 'uni-app不限制各端原生平台的API调用。开发者可以在uni-app框架中无限制的调用该平台所有能使用的API。'},
+			]
+			uni.showToast({ title: '生成成功', icon: 'success' });
+			this.replies = [...arr];
+			uni.hideToast();
+		},
+		copy(data) {
+			uni.setClipboardData({
+			  data,
+			  success: () => {
+			    uni.showToast({ title: '复制成功', icon: 'none' });
+			  }
+			})
+		},
+	}
+};
+</script>
+
+<style>
+	.yujl-container {
+		padding: 10rpx 20rpx 0 20rpx;
+		background-color: #f0f0f0;
+	}
+	.disflex {
+		display: flex;
+		flex-direction: row;
+	}
+	.yujl-textarea-wrap {
+		padding: 10rpx;
+		margin-top: 10rpx;
+		background-color: #FFFFFF;
+		display: flex;
+	}
+	.yujl-textarea {
+		min-height: 80rpx;
+		flex: 1;
+		font-size: 32rpx;
+		color: #353535;
+	}
+	.yujl-btn-wrap {
+		margin: 10rpx 0;
+	}
+	.yujl-text-wrap {
+		padding: 5rpx 10rpx 0rpx 10rpx;
+		display: flex;
+		background-color: #FFFFFF;
+		justify-content: center;
+		align-items: center;
+		text-align: left;
+		line-height: 1.8;
+	}
+	.yujl-text {
+		font-size: 32rpx;
+		color: #353535;
+	}
+	.text-border {
+		border-bottom: 6rpx solid #efeff4;
+	}
+</style>
