@@ -1,6 +1,3 @@
-Promise.resolve("./pages/tabBar/conversation/index.js").then((res) => {
-  res();
-});
 Promise.resolve("./pages/tabBar/component/component.js").then((res) => {
   res();
 });

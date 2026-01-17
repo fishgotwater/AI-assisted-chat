@@ -13,7 +13,7 @@
 			</radio-group>
 		</view>
 		<view class="yujl-textarea-wrap">
-			<textarea class="yujl-textarea" v-model="talk" />
+			<uni-easyinput type="textarea" autoHeight v-model="talk"></uni-easyinput>
 		</view>
 		<view class="yujl-btn-wrap">
 			<button type="primary" :disabled="!canReply" @click="generate">生成回复</button>
@@ -47,7 +47,7 @@ export default {
 		canReply() {
 			return !!this.talk;
 		},
-		...mapState(['hasLogin'])
+		...mapState(['hasLogin']),
 	},
 	methods: {
 		radioChange(evt) {
@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.yujl-container {
 		padding: 10rpx 20rpx 0 20rpx;
 		background-color: #f0f0f0;
@@ -98,16 +98,8 @@ export default {
 		flex-direction: row;
 	}
 	.yujl-textarea-wrap {
-		padding: 10rpx;
 		margin-top: 10rpx;
-		background-color: #FFFFFF;
 		display: flex;
-	}
-	.yujl-textarea {
-		min-height: 80rpx;
-		flex: 1;
-		font-size: 32rpx;
-		color: #353535;
 	}
 	.yujl-btn-wrap {
 		margin: 10rpx 0;

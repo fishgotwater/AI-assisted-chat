@@ -41,10 +41,7 @@
     "popGesture": "close",
     "launchwebview": {
       "id": "1",
-      "kernel": "WKWebview",
-      "uniNView": {
-        "path": "pages/tabBar/conversation/index.js"
-      }
+      "kernel": "WKWebview"
     },
     "usingComponents": true,
     "nvueCompiler": "uni-app",
@@ -210,5 +207,6 @@
   "screenOrientation": [
     "portrait-primary",
     "portrait-secondary"
-  ]
+  ],
+  "launch_path": "__uniappview.html"
 }

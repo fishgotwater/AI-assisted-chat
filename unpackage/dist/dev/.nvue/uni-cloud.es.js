@@ -15,7 +15,26 @@ const pages = [
   {
     path: "pages/tabBar/conversation/index",
     style: {
-      navigationBarTitleText: "聊天助手",
+      navigationBarTitleText: "聊天AI助手",
+      "app-plus": {
+        bounce: "vertical",
+        titleNView: {
+          buttons: [
+            {
+              text: "",
+              fontSrc: "/static/uni.ttf",
+              fontSize: "22px",
+              color: "#FFFFFF"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    path: "pages/login/index",
+    style: {
+      navigationBarTitleText: "聊天AI助手",
       "app-plus": {
         bounce: "vertical",
         titleNView: {

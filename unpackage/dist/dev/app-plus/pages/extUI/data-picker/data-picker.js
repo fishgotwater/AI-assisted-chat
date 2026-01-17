@@ -1471,7 +1471,26 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     {
       path: "pages/tabBar/conversation/index",
       style: {
-        navigationBarTitleText: "\u804A\u5929\u52A9\u624B",
+        navigationBarTitleText: "\u804A\u5929AI\u52A9\u624B",
+        "app-plus": {
+          bounce: "vertical",
+          titleNView: {
+            buttons: [
+              {
+                text: "\uE534",
+                fontSrc: "/static/uni.ttf",
+                fontSize: "22px",
+                color: "#FFFFFF"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      path: "pages/login/index",
+      style: {
+        navigationBarTitleText: "\u804A\u5929AI\u52A9\u624B",
         "app-plus": {
           bounce: "vertical",
           titleNView: {
