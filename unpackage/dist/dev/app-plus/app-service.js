@@ -4738,7 +4738,7 @@ if (uni.restoreGlobal) {
           phone: {
             rules: [{
               required: true,
-              errorMessage: "手机号码不能为空"
+              errorMessage: "手机号不能为空"
             }]
           },
           code: {
@@ -4757,6 +4757,7 @@ if (uni.restoreGlobal) {
       onRetrieve() {
         this.clicked = true;
       },
+      // 倒计时结束
       onTimeup() {
         this.clicked = false;
         if (this.btnText !== "再次获取") {
@@ -4765,12 +4766,16 @@ if (uni.restoreGlobal) {
       },
       submit() {
         this.$refs.valiForm.validate().then((res2) => {
-          formatAppLog("log", "at pages/login/index.vue:71", "success", res2);
-          uni.showToast({
-            title: `校验通过`
-          });
+          formatAppLog("log", "at pages/login/index.vue:78", "success", res2);
+          uni.navigateBack();
         }).catch((err) => {
-          formatAppLog("log", "at pages/login/index.vue:76", "err", err);
+          formatAppLog("log", "at pages/login/index.vue:88", "err", err);
+          uni.showModal({
+            title: "温馨提示",
+            content: "弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内",
+            showCancel: false,
+            confirmText: "确定"
+          });
         });
       }
     }
@@ -4800,7 +4805,7 @@ if (uni.restoreGlobal) {
           }, {
             default: vue.withCtx(() => [
               vue.createVNode(_component_uni_forms_item, {
-                label: "手机号码",
+                label: "手机号",
                 required: "",
                 name: "phone"
               }, {
@@ -4810,7 +4815,8 @@ if (uni.restoreGlobal) {
                     modelValue: $data.formData.phone,
                     "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.phone = $event),
                     trim: "all",
-                    maxlength: "11"
+                    maxlength: "11",
+                    placeholder: "请输入手机号码"
                   }, null, 8, ["modelValue"])
                 ]),
                 _: 1
@@ -4826,7 +4832,8 @@ if (uni.restoreGlobal) {
                     modelValue: $data.formData.code,
                     "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.code = $event),
                     trim: "all",
-                    maxlength: "6"
+                    maxlength: "6",
+                    placeholder: "请输入短信验证码"
                   }, {
                     right: vue.withCtx(() => [
                       !$data.clicked ? (vue.openBlock(), vue.createElementBlock(
